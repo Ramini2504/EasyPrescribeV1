@@ -1,0 +1,60 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const puppeteer = require('puppeteer');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+
+const app = express();
+app.use(express.static(__dirname + 'EasyPrescribe-master'));
+app.use(bodyParser.urlencoded({ extended true }));
+app.use(bodyParser.json());
+app.use(cors()); 
+
+app.post('convert', async (req, res) = {
+  try {
+    const html = req.body.html;
+    const emailAddress = req.body.emailAddress;
+
+     Launch a headless browser instance
+    const browser = await puppeteer.launch({ headless 'new' });
+    const page = await browser.newPage();
+
+     Set the HTML content of the page
+    await page.setContent(html);
+
+     Take a screenshot of the div content
+    const pdfBuffer = await page.pdf();
+    await browser.close();
+
+     Send the screenshot as an email attachment
+    const transporter = nodemailer.createTransport({
+      service 'gmail',
+      auth {
+        user 'karthikramini2504@gmail.com',
+        pass 'mtatxyqnopznmnwo'
+      }
+    });
+
+    const mailOptions = {
+      from 'karthikramini2504@gmail.com',
+      to emailAddress,
+      subject emailAddress+''s prescrption',
+      text 'Attached is the PDf of the prescrption.',
+      attachments [{
+        filename emailAddress+'.pdf',
+        content pdfBuffer
+      }]
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.send('Email sent successfully!');
+  } catch (error) {
+    console.error('Error', error);
+    res.status(500).send('An error occurred while sending the email.');
+  }
+});
+
+app.listen(3000, () = {
+  console.log('Server listening on port 3000');
+});

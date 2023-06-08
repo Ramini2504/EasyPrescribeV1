@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+    rel="stylesheet" 
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" 
+    crossorigin="anonymous">  
+    <title>EasyPrescribe</title>
+    <script>
+      var parentVar;
+      function receiveMessage(event) {
+        if (event.data.type === 'selectedValue') {
+          parentVar = event.data.value;
+        }
+      }
+      window.addEventListener('message', receiveMessage, false);
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm" style="background-color:#b2f0fb;">  
+            <div class="container-fluid">
+              <a class="navbar-brand" href="index.html"><img src="favicon\apple-touch-icon.png" alt="Logo" width="80" height="80" class="d-inline-block align-text-center"></a>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                        <strong class="h1 text-dark me-5"><i style="color:#42A5FF;">EASY PRESCRIBE</i></strong>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <div class="row">
+        <div class="col my-3 mx-2 w-70">
+            <div class="container prescriptionTemplate border ms-2 rounded" style="width:650px;" id="presc">
+                <div class="col">
+                    <div class="row mx-2 my-1 text-primary">
+                        <p>
+                            <strong class="mx-1" id="since-value">SINCE : 2000</strong>|
+                            <strong class="mx-1" id="cell-value">CELL : 9XXXXXXXX9</strong>
+                        </p>
+                    </div>
+                    <div class="row mt-2 mx-1">
+                        <div class="col"><img class="image-fluid" alt="logo_hos" id="hospital-logo" height="50%"></div>
+                        <div class="col text-danger">
+                            <figure class="text-end mt-3">
+                                <blockquote class="blockquote">
+                                  <p style="font-weight:900; font-size: xx-large; font-family: 'Titan One', cursive;" id="hospital-name">O Hospitals</p>
+                                </blockquote>
+                                <figcaption class="blockquote-footer" style="font-size:10px;" id="hospital-address">
+                                  plot No.9, Bseide Ryuthu Bazar<cite title="Source Title">Vanasthalipuram, HYD</cite>
+                                </figcaption>
+                              </figure>
+                        </div>
+                    </div>
+                    <div class="row mx-1 text-dark rounded  w-70" style="background-color :rgb(202, 202, 202)"><div class="col">Date : <strong id="CuDate"></strong></div></div>
+                    <div class="row my-1 mx-1 text-dark rounded" style="background-color :rgb(202, 202, 202)">
+                        <div class="col">Name : <strong id="tempName"></strong></div>
+                        <div class="col">Age : <strong  id="tempAge"></strong></div>
+                        <div class="col">Sex : <strong id="tempSex"></strong></div>
+                    </div>
+                    <div class="row mb-2 mx-1 text-dark rounded" style="background-color :rgb(202, 202, 202)">
+                        <div class="col">Weight : <strong  id="tempWeight"></strong></div>
+                    </div>
+                </div> 
+                <hr>
+                <div class="row border mx-1 mb-1 rounded" id="newMedic">
+                    <div class="text-dark fs-1 font-weight-bold">
+                        <div class="col" id="newNode">
+                            
+                        </div>                      
+                    </div>
+                    <div id="temp">
+                        <p></p>
+                    </div>
+                </div>     
+            </div>
+        </div>
+        <div class="col">
+            <div class="container my-3 me-3 border rounded w-70" style="background-color: rgb(202, 202, 202); width: 500px;">
+                <p class="display-6 text-center bolder">Patient Details: </p>
+                <div class="input-group my-2 w-70">
+                    <input type="text" class="form-control" id="inputName" placeholder="Enter patients name">
+                </div>
+                <div class="input-group my-2 w-70">
+                    <input type="number" class="form-control" id="inputAge" placeholder="Enter the age">
+                </div>
+                <div class="input-group my-2 w-70">
+                    
+                    <input type="text" class="form-control" id="inputSex" placeholder="Enter the sex">
+                    
+                    <input type="number" class="form-control" id="inputWeight" placeholder="Enter the weight">
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mt-4 mb-2" onclick="post()">
+                        POST
+                    </button>
+                </div>
+            </div>
+            <div class="container my-3 me-3 border rounded w-70" style="background-color: rgb(202, 202, 202); width: 500px;" id="newMedic">
+                <p class="display-6 text-center bolder">Add Medicine:</p>  
+                <div class="font-weight-bold" id="newNode">
+                  <div class="container-fluid m-2">
+                    <iframe src="temp1.html" width="100%" height="200"></iframe>
+                  </div>                  
+                    <div class="ms-5">
+                        <form id="form1">
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Morning">
+                            <label class="form-check-label" for="inlineCheckbox1">Morning</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Afternoon">
+                            <label class="form-check-label" for="inlineCheckbox2">Afternoon</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Night">
+                            <label class="form-check-label" for="inlineCheckbox3">Night</label>
+                          </div>
+                        </form>
+                          <div class="text-center">
+                            <button class="btn btn-primary mx-5 mt-4 mb-2" onclick="add()">ADD</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container my-3 me-3 border rounded w-70 text-center" style="width: 500px;">
+                <button onclick="Pprint()" class="btn btn-primary ml-3 my-2 w-50" style="height:50px;"><i class="fa-solid fa-print mx-2"></i><strong>Print</strong></button><br>
+                <input type="text" id="emailInput" placeholder="Enter patient's email"><br>
+                <button id="convertBtn" class="btn btn-danger ml-3 my-2 w-50 SEND" style="height:50px;"><i class="fa fa-paper-plane" aria-hidden="true"></i> <strong>Send</strong></button>
+                <button onclick="toggleUpdateFields()" class="btn btn-warning ml-3 my-2 w-50" style="height:50px; color:white;" ><i class="fa fa-pencil" aria-hidden="true"></i> <strong>Edit</strong></button>
+                  <!-- Input elements for hospital information -->
+                <div id="update-fields" style="display: none;"><input type="file" accept="image/*" id="logo-input">
+                <button onclick="updateLogoImage()" class="btn btn-secondary btn-sm ml-3 my-2">Update Logo</button>
+  
+                <input type="text" id="name-input" class="form-control" placeholder="Enter hospital name">
+                <button onclick="updateHospitalName()" class="btn btn-secondary btn-sm ml-3 my-2">Update Name</button>
+  
+                <input type="text" id="address-input" class="form-control" placeholder="Enter hospital address">
+                <button onclick="updateHospitalAddress()" class="btn btn-secondary btn-sm ml-3 my-2">Update Address</button>
+  
+                <input type="text" id="since-input" class="form-control" placeholder="Enter SINCE value">
+                <button onclick="updateSinceValue()" class="btn btn-secondary btn-sm ml-3 my-2">Update SINCE</button>
+  
+                <input type="number" id="cell-input"  class="form-control"placeholder="Enter CELL value">
+                <button onclick="updateCellValue()" class="btn btn-secondary btn-sm ml-3 my-2">Update Phone number</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    const convertBtn = document.getElementById('convertBtn');
+    convertBtn.addEventListener('click', async () => {
+      const emailInput = document.getElementById('emailInput');
+      const emailAddress = emailInput.value;
+
+      // Capture the content of the div tag
+      const contentDiv = document.getElementById('presc');
+      const html = contentDiv.innerHTML;
+
+      // Send the HTML content and email address to the server
+      const response = await fetch('http://localhost:3000/convert', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          html: html,
+          emailAddress: emailAddress
+        })
+      });
+
+      const result = await response.text();
+      console.log(result);
+    });
+    </script>
+    <script>
+        var a = 0;
+        function post() {
+            let nameFeild = document.getElementById('inputName').value
+            let ageFeild = document.getElementById('inputAge').value
+            let sexFeild = document.getElementById('inputSex').value
+            let weightFeild = document.getElementById('inputWeight').value
+            
+            let nameT = document.getElementById('tempName')
+            let ageT = document.getElementById('tempAge')
+            let sexT = document.getElementById('tempSex')
+            let weightT = document.getElementById('tempWeight')
+            let dateT = document.getElementById('CuDate')
+            
+                var dateObj = new Date();
+                var month = dateObj.getUTCMonth() + 1;
+                var day = dateObj.getUTCDate();
+                var year = dateObj.getUTCFullYear();
+                var time = dateObj.getTime();
+                var hrs = dateObj.getHours();
+                var mins = dateObj.getMinutes();
+                var sec = dateObj.getSeconds();
+                const d = day+"-"+month+"-"+year+"(Time - "+hrs+":"+mins+":"+sec+")"
+                dateT.innerHTML = d
+                nameT.innerHTML = nameFeild
+                ageT.innerHTML = ageFeild
+                sexT.innerHTML = sexFeild
+                weightT.innerHTML = weightFeild
+        }
+        function add() {
+            let Medic = parentVar;
+            let check1 = document.getElementById("inlineCheckbox1")
+            let check2 = document.getElementById("inlineCheckbox2")
+            let check3 = document.getElementById("inlineCheckbox3")
+
+            var new_div = document.createElement("div")
+            var new_i_1 = document.createElement("i")
+
+            new_div.innerHTML = (++a)+".  "+Medic
+            document.getElementById("newNode").appendChild(new_div)            
+
+            const imageHtml = '<img src="dark.png" alt="Circle Image" width="50" height="50">';
+            const imageHtml1 = '<img src="light.png" alt="Circle Image" width="50" height="50">';
+
+            if(check1.checked && check2.checked && check3.checked) {
+                new_i_1.innerHTML = imageHtml+"------"+imageHtml+"------"+imageHtml
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else if(check1.checked && check2.checked) {
+                new_i_1.innerHTML = imageHtml+""+line+""+imageHtml+""+line+""+imageHtml1
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else if(check1.checked && check3.checked) {
+                new_i_1.innerHTML = imageHtml+"------"+imageHtml1+"------"+imageHtml
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else if(check2.checked && check3.checked) {
+                new_i_1.innerHTML = imageHtml1+"------"+imageHtml+"------"+imageHtml
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else if(check1.checked) {
+                new_i_1.innerHTML = imageHtml+"------"+imageHtml1+"------"+imageHtml1
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else if(check2.checked) {
+                new_i_1.innerHTML = imageHtml1+"-----"+imageHtml+"------"+imageHtml1
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else if(check3.checked) {
+                new_i_1.innerHTML = imageHtml1+"------"+imageHtml1+"-----"+imageHtml
+                document.getElementById("newNode").appendChild(new_i_1)
+            }else {
+                new_i_1.innerHTML = " "
+                document.getElementById("newNode").appendChild(new_i_1)
+            }
+            var form = document.getElementById('form');
+            var form1 = document.getElementById('form1')
+            // form.reset();
+            form1.reset();
+        }
+        function Pprint() {
+            var printContents = document.getElementById("presc").innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+        function toggleUpdateFields() {
+            var updateFields = document.getElementById('update-fields');
+            if (updateFields.style.display === 'none') {
+                updateFields.style.display = 'block';
+            } else {
+                updateFields.style.display = 'none';
+            }
+        }
+        function updateLogoImage() {
+            var logoInput = document.getElementById('logo-input');
+            if (logoInput.files && logoInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                var logoElement = document.getElementById('hospital-logo');
+                logoElement.src = e.target.result;
+          
+                localStorage.setItem('logoURL', e.target.result);
+                };
+                reader.readAsDataURL(logoInput.files[0]);
+            }
+        }
+        function updateHospitalName() {
+            var nameInput = document.getElementById('name-input');
+            var newName = nameInput.value;
+            var nameElement = document.getElementById('hospital-name');
+            nameElement.textContent = newName;
+            localStorage.setItem('hospitalName', newName);
+        }
+        function updateHospitalAddress() {
+            var addressInput = document.getElementById('address-input');
+            var newAddress = addressInput.value;
+            var addressElement = document.getElementById('hospital-address');
+            addressElement.textContent = newAddress;
+            localStorage.setItem('hospitalAddress', newAddress);
+        }
+        function updateSinceValue() {
+            var sinceInput = document.getElementById('since-input');
+            var newSince = sinceInput.value;
+            var sinceElement = document.getElementById('since-value');
+            sinceElement.textContent = 'SINCE : ' + newSince;
+            localStorage.setItem('sinceValue', newSince);
+        }
+        function updateCellValue() {
+            var cellInput = document.getElementById('cell-input');
+            var newCell = cellInput.value;
+            var cellElement = document.getElementById('cell-value');
+            cellElement.textContent = 'CELL : ' + newCell;
+            localStorage.setItem('cellValue', newCell);
+        }
+        window.onload = function() {
+            var logoURL = localStorage.getItem('logoURL');
+            if (logoURL) {
+                var logoElement = document.getElementById('hospital-logo');
+                logoElement.src = logoURL;
+            }
+            var hospitalName = localStorage.getItem('hospitalName');
+            if (hospitalName) {
+                var nameElement = document.getElementById('hospital-name');
+                nameElement.textContent = hospitalName;
+            }
+            var hospitalAddress = localStorage.getItem('hospitalAddress');
+            if (hospitalAddress) {
+                var addressElement = document.getElementById('hospital-address');
+                addressElement.textContent = hospitalAddress;
+            }
+            var sinceValue = localStorage.getItem('sinceValue');
+            if (sinceValue) {
+                var sinceElement = document.getElementById('since-value');
+                sinceElement.textContent = 'SINCE : ' + sinceValue;
+            }
+            var cellValue = localStorage.getItem('cellValue');
+            if (cellValue) {
+                var cellElement = document.getElementById('cell-value');
+                cellElement.textContent = 'CELL : ' + cellValue;
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
+    crossorigin="anonymous"></script>
+</body>
+</html>

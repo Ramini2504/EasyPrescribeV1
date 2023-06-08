@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+    rel="stylesheet" 
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" 
+    crossorigin="anonymous">
+    <title>Search Bar</title>
+    <style>
+      body {
+        background-color: rgb(202, 202, 202);
+      }
+      .autocomplete {
+        position: relative;
+        display: inline-block;
+      }
+      .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-top: none;
+        z-index: 9999;
+        top: 100%;
+        left: 0;
+        right: 0;
+      }
+      .autocomplete-item {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+      }
+      .autocomplete-item:hover {
+        background-color: #e9e9e9;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="post">
+      
+      <label>Search</label>
+      <div class="autocomplete">
+        <form class="d-flex" id="form">
+          <input class="form-control" name="search" type="text" id="inputMedic" placeholder="Type Medicine.."> 
+        </form>
+        <div id="autocomplete-list" class="autocomplete-items"></div>
+      </div>
+    </form>
+
+    <script>
+      function sendSelectedValue(selectedValue) {
+        window.parent.postMessage(
+          { type: 'selectedValue', value: selectedValue },
+          '*'
+        );
+      }
+      // Function to make an AJAX request and get autocomplete suggestions
+      function getAutocompleteSuggestions(str) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var suggestions = JSON.parse(this.responseText);
+            showAutocompleteSuggestions(suggestions);
+          }
+        };
+        xmlhttp.open(
+          "GET",
+          "temp1.php?search=" + encodeURIComponent(str),
+          true
+        );
+        xmlhttp.send();
+      }
+
+      // Function to display autocomplete suggestions
+      function showAutocompleteSuggestions(suggestions) {
+        var autocompleteList = document.getElementById("autocomplete-list");
+        autocompleteList.innerHTML = "";
+        suggestions.forEach(function (suggestion) {
+          var item = document.createElement("div");
+          item.classList.add("autocomplete-item");
+          item.innerHTML = suggestion;
+          item.addEventListener("click", function () {
+            document.getElementById("inputMedic").value = suggestion;
+            autocompleteList.innerHTML = "";
+            sendSelectedValue(suggestion);
+          });
+          autocompleteList.appendChild(item);
+        });
+      }
+
+      // Event listener for input changes
+      document
+        .getElementById("inputMedic")
+        .addEventListener("input", function () {
+          var searchValue = this.value;
+          if (searchValue.length >= 1) {
+            getAutocompleteSuggestions(searchValue);
+          } else {
+            document.getElementById("autocomplete-list").innerHTML = "";
+          }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
+    crossorigin="anonymous"></script>
+  </body>
+</html>
